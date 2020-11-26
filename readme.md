@@ -7,5 +7,5 @@ OAuth protocols is provide secure authorization for systems like web, mobile. We
 <div align="center">
 <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/image/bootstrap-social.png" alt="Logo" width="20%" height="20%">
   </div>
-I will tell many information about OAuth. <a href="https://oauth.net/2/">But see more about it in here</a> <br>
+I will tell many information about OAuth. <a href="https://oauth.net/2/">But see more about it in here</a>
 #### OpenId Connect
