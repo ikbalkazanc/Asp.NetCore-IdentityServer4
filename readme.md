@@ -7,6 +7,6 @@ OAuth protocols is provide secure authorization for systems like web, mobile. We
 <div align="center">
 <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/image/bootstrap-social.png" alt="Logo" width="20%" height="20%">
   </div>
-I will tell many information about OAuth. if you want see about it You can examine <a href="oauth.net/2/">here</a>.
-
+I will tell many information about OAuth. if you want see about it You can examine <a href="https://oauth.net/2/">here</a>.
 #### OpenId Connect
+OpenId Connect allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server.
