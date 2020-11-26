@@ -5,7 +5,7 @@ Identity server is provide many easiness to us. We can define authorization rule
 #### OAuth 2.0
 OAuth protocols is provide secure authorization for systems like web, mobile. We are seeing many instances in daily life as sign in to any web sites. 
 <div align="center">
-<img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/image/bootstrap-social.png" alt="Logo" width="30%" height="30%">
+<img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/image/bootstrap-social.png" alt="Logo" width="20%" height="20%">
   </div>
-I will tell many information about OAuth. <a href="https://oauth.net/2/">But see more about it</a> <br>
+I will tell many information about OAuth. <a href="https://oauth.net/2/">But see more about it in here</a> <br>
 #### OpenId Connect
