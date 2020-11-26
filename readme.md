@@ -9,4 +9,4 @@ OAuth protocols is provide secure authorization for systems like web, mobile. We
  </div>
 
 #### OpenId Connect
-OpenId Connect allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server.
+OpenId Connect allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server. if you want see about it You can examine <a href="https://openid.net/connect/">here</a>. 
