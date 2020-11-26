@@ -5,7 +5,7 @@ Identity server is provide many easiness to us. We can define authorization rule
 #### OAuth 2.0
 OAuth protocols is provide secure authorization for systems like web, mobile. We are seeing many instances in daily life as sign in to any web sites. 
 <div align="center">
-<img src="https://lipis.github.io/bootstrap-social/assets/img/bootstrap-social.png" alt="Logo" width="60%" height="60%">
+<img src="https://lipis.github.io/bootstrap-social/assets/img/bootstrap-social.png" alt="Logo" width="%40" height="%40">
   </div>
 <br/>
 #### OpenId Connect
