@@ -24,6 +24,9 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IjJDQzA3MEI2NjMxRTUzMEY0MjkwRUJEOEY0MzI4QzQ1IiwidHlw
 
 ## OAuth 2.0 Grands (Flows
 #### Authorization code grant
+kral şimdi kullanıcı şifre pass'i auth servere gönderiyor. eğer doğruysa auth server token veriyor. Kullanıcı bu tokenle istek yapıtığı zaman auth access token veriyor. Bu tokenle controllere erişiyor. 
 #### Implicit grant
+bir üstekinin optimize hali. pass id doğruysa auth server direk access token gönderiyor. Kullanıcının kafa rahat.
 #### Resource owner credentials grand
+Ya kıral işte aynı  maktık. Kullanıcılara role atıyor.
 #### Client credentials grant
