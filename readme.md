@@ -17,7 +17,7 @@ OpenId Connect allows Clients to verify the identity of the End-User based on th
 ## Some Important Terms
 <strong>Resources :</strong> Resources are a series of identity. We will define identity rules inside resource. And we are assign to clients them. As example, we will do define just reading to in API 1 for Client1.  
 <strong>Identity Token :</strong> We are give token to request. These are contained in client names, base urls, scopes, private key and public key. There are a lot of details, but for now, these concern us. Private key      
-```s
+`
 eyJhbGciOiJSUzI1NiIsImtpZCI6IjJDQzA3MEI2NjMxRTUzMEY0MjkwRUJEOEY0MzI4QzQ1IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2MDYzOTEwNzYsImV4cCI6MTYwNjM5NDY3NiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6InJlc291cmNlX2FwaTEiLCJjbGllbnRfaWQiOiJDbGllbnQxIiwianRpIjoiQjE1N0JFRjc1MkUxMzQzNzlGOUFFM0I5MzJCNkYzNTIiLCJpYXQiOjE2MDYzOTEwNzYsInNjb3BlIjpbImFwaTEucmVhZCIsImFwaTEudXBkYXRlIiwiYXBpMS53cml0ZSJdfQ.dQYwd9JLt9YGvhkxp36GSNRttSI9rYoz2KctY0FFD2XQ5X0pvyLi07FmHJik8zZnXRezXH2txwy9VkbbQ-bwEZ5cWzylmuS2fXKkUTr2wyQhV6_tyPOjluGrKBcUHkB1cL_ypXRm6ijy-i1XxVuGNjPiT0LZH9aB69RaeQn4khWAY27VFVucWkPhf3nkTvH7dOKPu-cK8cmpLPkQa7BT08cxddOqB8kK_9YZEp3wyvjTBXF_V0GfxvQfMtEp60LBx2gfXJGHm1PMftF5k0oTCZB1xYWwR_P2HY-3Edl0AwZSvz80-v2GTSm2q9RWfuLSlZVB5AvAmQyh0OfyNUx7XA
-```
+`
 <strong>Access Token :</strong>
