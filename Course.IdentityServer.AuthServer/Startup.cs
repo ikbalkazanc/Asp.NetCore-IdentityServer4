@@ -24,6 +24,15 @@ namespace Course.IdentityServer.AuthServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //define config sources. And remark secret key type
+            //we using two type key
+            //private key => only in indentityServer
+            //public key => in clients
+            services.AddIdentityServer()
+                .AddInMemoryApiResources(Config.GerApiResource())
+                .AddInMemoryApiScopes(Config.GerApiScopes())
+                .AddInMemoryClients(Config.GetClients())
+                .AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +52,7 @@ namespace Course.IdentityServer.AuthServer
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
