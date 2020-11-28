@@ -22,9 +22,12 @@ OpenId Connect allows Clients to verify the identity of the End-User based on th
 eyJhbGciOiJSUzI1NiIsImtpZCI6IjJDQzA3MEI2NjMxRTUzMEY0MjkwRUJEOEY0MzI4QzQ1IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2MDYzOTEwNzYsImV4cCI6MTYwNjM5NDY3NiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6InJlc291cmNlX2FwaTEiLCJjbGllbnRfaWQiOiJDbGllbnQxIiwianRpIjoiQjE1N0JFRjc1MkUxMzQzNzlGOUFFM0I5MzJCNkYzNTIiLCJpYXQiOjE2MDYzOTEwNzYsInNjb3BlIjpbImFwaTEucmVhZCIsImFwaTEudXBkYXRlIiwiYXBpMS53cml0ZSJdfQ.dQYwd9JLt9YGvhkxp36GSNRttSI9rYoz2KctY0FFD2XQ5X0pvyLi07FmHJik8zZnXRezXH2txwy9VkbbQ-bwEZ5cWzylmuS2fXKkUTr2wyQhV6_tyPOjluGrKBcUHkB1cL_ypXRm6ijy-i1XxVuGNjPiT0LZH9aB69RaeQn4khWAY27VFVucWkPhf3nkTvH7dOKPu-cK8cmpLPkQa7BT08cxddOqB8kK_9YZEp3wyvjTBXF_V0GfxvQfMtEp60LBx2gfXJGHm1PMftF5k0oTCZB1xYWwR_P2HY-3Edl0AwZSvz80-v2GTSm2q9RWfuLSlZVB5AvAmQyh0OfyNUx7XA
 ```
 
-## OAuth 2.0 Grands (Flows
-#### Authorization code grant
-kral şimdi kullanıcı şifre pass'i auth servere gönderiyor. eğer doğruysa auth server token veriyor. Kullanıcı bu tokenle istek yapıtığı zaman auth access token veriyor. Bu tokenle controllere erişiyor. 
+## OAuth 2.0 Grands (Flows)
+#### Authorization Code Grant
+This is so complicated. But in sum, Resource owner(kullanıcı) is sending request to identity server with client identifier(username&password). This server can be facebook, twitter identity servers etc. Then server checking client identifier. if it's right it send authorization code(identity token) to client. And when client request to APIs it sending authorization code to identity server. Identity server is sending back access token and client credential. anymore client can be request to api with access token.
+<div align="center">
+ <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/bootstrap-social.png" alt="Logo" width="20%" height="20%">
+</div>
 #### Implicit grant
 bir üstekinin optimize hali. pass id doğruysa auth server direk access token gönderiyor. Kullanıcının kafa rahat.
 #### Resource owner credentials grand
