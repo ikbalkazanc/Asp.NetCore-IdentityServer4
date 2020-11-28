@@ -28,8 +28,12 @@ This is so complicated. But in sum, Resource owner(kullanıcı) is sending reque
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/IdentityServer4-Yazi-Serisi-8-Authorization-Code-GrantFlow.png" alt="Logo" width="50%" height="50%">
 </div>
+
 #### Implicit grant
 bir üstekinin optimize hali. pass id doğruysa auth server direk access token gönderiyor. Kullanıcının kafa rahat.
 #### Resource owner credentials grand
 Ya kıral işte aynı  maktık. Kullanıcılara role atıyor.
 #### Client credentials grant
+
+## Source
+https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/
