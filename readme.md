@@ -24,10 +24,11 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IjJDQzA3MEI2NjMxRTUzMEY0MjkwRUJEOEY0MzI4QzQ1IiwidHlw
 
 ## OAuth 2.0 Grands (Flows)
 #### Authorization Code Grant
-This is so complicated. But in sum, Resource owner(kullanıcı) is sending request to identity server with client identifier(username&password). This server can be facebook, twitter identity servers etc. Then server checking client identifier. if it's right it send authorization code(identity token) to client. And when client request to APIs it sending authorization code to identity server. Identity server is sending back access token and client credential. anymore client can be request to api with access token.
+This is so complicated. But in sum, Resource owner(user) is sending request to identity server with client identifier(username&password). This server can be facebook, twitter identity servers etc. Then server checking client identifier. if it's right it send authorization code(identity token) to client. And when client request to APIs it sending authorization code to identity server. Identity server is sending back access token and client credential. anymore client can be request to api with access token.
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/IdentityServer4-Yazi-Serisi-8-Authorization-Code-GrantFlow.png" alt="Logo" width="40%" height="40%">
 </div>
+You can found more in <a href="https://tools.ietf.org/html/rfc6749#section-1.3.1">here</a> 
 
 #### Implicit grant
 bir üstekinin optimize hali. pass id doğruysa auth server direk access token gönderiyor. Kullanıcının kafa rahat.
