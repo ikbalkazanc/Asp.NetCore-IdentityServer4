@@ -28,7 +28,7 @@ This is so complicated. But in sum, Resource owner(user) is sending request to i
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/IdentityServer4-Yazi-Serisi-8-Authorization-Code-GrantFlow.png" alt="Logo" width="40%" height="40%">
 </div>
-You can found more in <a href="https://tools.ietf.org/html/rfc6749#section-1.3.1">here</a> 
+You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.1">here</a> 
 
 #### Implicit grant
 bir üstekinin optimize hali. pass id doğruysa auth server direk access token gönderiyor. Kullanıcının kafa rahat.
