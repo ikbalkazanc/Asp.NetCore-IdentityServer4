@@ -53,14 +53,19 @@ It is the simplest of them all. we are send client authentication to authorizati
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.4">here</a>
 
 ## Identity Endpoints
-Identity server is provide a series endpoints. We will by using them communicate with identity server. We will include Http client then request token and info from server. Below I tried to explain some of the "endpoints" that I think significant. Also you can find out in <a href="https://identityserver4.readthedocs.io/en/latest/endpoints/discovery.html">here</a>
+Identity server is provide a series endpoints. We will by using them communicate with identity server. We will include Http client then request token and info from server. Below I tried to explain some of the "endpoints" that I think significant. Also you can find out more in <a href="https://identityserver4.readthedocs.io/en/latest/endpoints/discovery.html">here</a>
 
 #### Discovery Endpoint
+Discovery endpoint is a information request. Server response json string to us. Has many info inside of discovery. Such as base url, supported scopes, claims, grant types and response types. Below url is discovery endpoint.
+````
+https://demo.identityserver.io/.well-known/openid-configuration
+````
 #### Authorize Endpoint
 #### Token Endpoint
 #### Introspection Endpoint
 #### End Session Endpoint
 
 ## Source
-https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/
-https://tools.ietf.org/html/rfc6749
+https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
+https://tools.ietf.org/html/rfc6749</br>
+https://identityserver4.readthedocs.io/en/latest/index.html</br>
