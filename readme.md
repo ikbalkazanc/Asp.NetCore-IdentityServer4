@@ -30,14 +30,20 @@ This is so complicated. But in sum, Resource owner(user) is sending request to i
 </div>
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.1">here</a> 
 
-#### Implicit grant
+#### Implicit Grant
 Implicit grant is like authorization code grant but have a one difference  it. It's sending one request to authorization server. Authorization server redirection URI with access token and client credential.    
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/implicit-spa_4.png" alt="Logo" width="40%" height="40%">
 </div>
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.2">here</a> 
-#### Resource owner credentials grand
-Ya kıral işte aynı  maktık. Kullanıcılara role atıyor.
+
+#### Resource Owner Credentials Grandt
+In this, it sends "resource owner" and "password credentials" information to the authorization server. Authorization server redirection URI with access token and client credential. Such as implicit grant but includes authorization code grant properties.
+<div align="center">
+ <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ropc-flow.png" alt="Logo" width="50%" height="50%">
+</div>
+You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.3">here</a>
+
 #### Client credentials grant
 
 ## Source
