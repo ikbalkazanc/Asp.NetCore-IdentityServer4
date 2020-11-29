@@ -48,7 +48,7 @@ You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.3">h
 It is the simplest of them all. we are send client authentication to authorization server. Then, server is send response to client with access token.
 
 <div align="center">
- <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ClientCredentials.png" alt="Logo" width="80%" height="80%">
+ <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ClientCredentials.png" alt="Logo" width="50%" height="50%">
 </div>
 
 ## Source
