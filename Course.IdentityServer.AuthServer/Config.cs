@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 namespace Course.IdentityServer.AuthServer
 {
@@ -31,10 +33,38 @@ namespace Course.IdentityServer.AuthServer
             };
         }
 
+
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>()
+            {
+                //25.7.22
+                new IdentityResources.OpenId(), //sub Id
+                new IdentityResources.Profile()
+            };
+        }
+
+        public static IEnumerable<TestUser> GetUsers()
+        {
+            return new List<TestUser>()
+            {
+                new TestUser{SubjectId = "1",Username = "mikbal",Password = "1234",Claims = new List<Claim>()
+                {
+                    new Claim("given_name","ikbal"),
+                    new Claim("family_name","kazanci")
+                }},
+                new TestUser{SubjectId = "2",Username = "pelin",Password = "1234",Claims = new List<Claim>()
+                {
+                    new Claim("given_name","pelin"),
+                    new Claim("family_name","su")
+                }}
+            };
+        }
+
         //define clients
         public static IEnumerable<Client> GetClients()
         {
-            return  new List<Client>()
+            return new List<Client>()
             {
                 new Client()
                 {

@@ -32,6 +32,8 @@ namespace Course.IdentityServer.AuthServer
                 .AddInMemoryApiResources(Config.GerApiResource())
                 .AddInMemoryApiScopes(Config.GerApiScopes())
                 .AddInMemoryClients(Config.GetClients())
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddTestUsers(Config.GetUsers().ToList())
                 .AddDeveloperSigningCredential();
         }
 
