@@ -50,6 +50,7 @@ It is the simplest of them all. we are send client authentication to authorizati
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ClientCredentials.png" alt="Logo" width="50%" height="50%">
 </div>
+You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.4">here</a>
 
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/
