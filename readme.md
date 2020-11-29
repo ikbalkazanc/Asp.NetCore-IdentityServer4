@@ -58,7 +58,7 @@ Identity server is provide a series endpoints. We will by using them communicate
 #### Discovery Endpoint
 Discovery endpoint is a information request. Server response json string to us. Has many info inside of discovery. Such as base url, supported scopes, claims, grant types and response types. Below url is discovery endpoint.
 ````
-https://demo.identityserver.io/.well-known/openid-configuration
+https://base-url/.well-known/openid-configuration
 ````
 #### Authorize Endpoint
 #### Token Endpoint
