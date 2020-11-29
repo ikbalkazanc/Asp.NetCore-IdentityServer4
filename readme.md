@@ -33,7 +33,7 @@ You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.1">h
 #### Implicit Grant
 Implicit grant is such as authorization code grant but have a one difference. It's sending one request to authorization server. Authorization server redirection URI with access token and client credential.    
 <div align="center">
- <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/implicit-spa_4.png" alt="Logo" width="40%" height="40%">
+ <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/implicit-spa_4.png" alt="Logo" width="50%" height="50%">
 </div>
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.2">here</a> 
 
@@ -45,6 +45,11 @@ In this, it sends "resource owner" and "password credentials" information to the
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.3">here</a>
 
 #### Client credentials grant
+It is the simplest of them all. we are send client authentication to authorization server. Then, server is send response to client with access token.
+
+<div align="center">
+ <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ClientCredentials.png" alt="Logo" width="80%" height="80%">
+</div>
 
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/
