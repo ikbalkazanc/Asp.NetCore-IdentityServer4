@@ -69,6 +69,10 @@ POST https://base-url/connect/introspect
 ```
 #### End Session Endpoint
 
+
+front channel authorize enpointe yapılan istektir.
+back end channel token endpointe yapılan istektir.
+
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
