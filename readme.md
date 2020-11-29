@@ -45,7 +45,7 @@ In this, it sends "resource owner" and "password credentials" information to the
 You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.3">here</a>
 
 #### Client credentials grant
-It is the simplest of them all. we are send client authentication to authorization server. Then, server is send response to client with access token.
+It is the simplest of them all. we are send client authentication to authorization server. Then, server is send back response to client with access token.
 
 <div align="center">
  <img src="https://github.com/ikbalkazanc/Asp.NetCore-IdentityServer4/blob/master/images/ClientCredentials.png" alt="Logo" width="50%" height="50%">
@@ -56,13 +56,17 @@ You can read more in <a href="https://tools.ietf.org/html/rfc6749#section-4.4">h
 Identity server is provide a series endpoints. We will by using them communicate with identity server. We will include Http client then request token and info from server. Below I tried to explain some of the "endpoints" that I think significant. Also you can find out more in <a href="https://identityserver4.readthedocs.io/en/latest/endpoints/discovery.html">here</a>
 
 #### Discovery Endpoint
-Discovery endpoint is a information request. Server response json string to us. Has many info inside of discovery. Such as base url, supported scopes, claims, grant types and response types. Below url is discovery endpoint.
+Discovery endpoint is a information request about auth server. its response json string to us. Has many info inside of discovery. Such as base url, supported scopes, claims, grant types and response types. Below url is discovery endpoint.
 ````
 https://base-url/.well-known/openid-configuration
 ````
 #### Authorize Endpoint
 #### Token Endpoint
 #### Introspection Endpoint
+This time we are checking to token authorize on API as client. of course we're require token and authorization type. Server is send back response to client as true or false.
+```
+POST https://base-url/connect/introspect
+```
 #### End Session Endpoint
 
 ## Source
