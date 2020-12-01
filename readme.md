@@ -62,16 +62,22 @@ https://base-url/.well-known/openid-configuration
 ````
 #### Authorize Endpoint
 #### Token Endpoint
+#### User Info Endpoint
+We can get information about user idenity from auth server. We need token for this.Also when we get information, some data will be missing. We can set this up in client services. 
+```
+GET https://base-url/connect/userinfo
+Authorization: Bearer <access_token>
+```
 #### Introspection Endpoint
 This time we are checking to token authorize on API as client. of course we're require token and authorization type. Server is send back response to client as true or false.
 ```
 POST https://base-url/connect/introspect
 ```
 #### End Session Endpoint
-
-
 front channel authorize enpointe yapılan istektir.
 back end channel token endpointe yapılan istektir.
+## Quickstart UI
+A sample UI is exist in identityServer4 github page. I will by using this UI i contunie this project. For this reason required including in the auth server for those who will read the entire blog. You easily can include with powershell.You can visit the github repository for more details in <a href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">here</a>. 
 
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
