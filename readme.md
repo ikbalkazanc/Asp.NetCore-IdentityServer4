@@ -79,7 +79,11 @@ back end channel token endpointe yapılan istektir.
 ## Quickstart UI
 A sample UI is exist in identityServer4 github page. I will by using this UI i contunie this project. For this reason required including in the auth server for those who will read the entire blog. You easily can include with powershell.You can visit the github repository for more details in <a href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">here</a>. 
 
-## Client Credentials Grant
+## Creating Solution Project
+First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.   I 
+## Client Credentials Grant Application
+
+Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. 
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
