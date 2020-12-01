@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -81,6 +82,33 @@ namespace Course.IdentityServer.AuthServer
                     ClientSecrets = new[] {new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = {"api2.read","api2.write","api1.read"}
+                },
+                new Client()
+                {
+                    ClientId = "Client1-Mvc",
+                    //auth pkce
+                    RequirePkce = false,
+                    ClientName = "Client1-Mvc mvc app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    //front channel
+                    RedirectUris = new List<string>{ "https://localhost:5026/signin-oidc" },
+                    PostLogoutRedirectUris = new List<string>{"https://localhost:5026/signout-callback-oidc"},
+                    AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1.read",
+                        "api2.write",
+                        "api1.update",
+                        IdentityServerConstants.StandardScopes.OfflineAccess
+                    },
+                    //default 1 hour
+                    AccessTokenLifetime = 2*3600,
+                    //allow reflesh token
+                    AllowOfflineAccess = true,
+                    //use more than one
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    //
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds
                 }
             };
         }

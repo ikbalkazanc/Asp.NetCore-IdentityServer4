@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Microsoft.AspNetCore.Authentication
+
+<h1>Just users can access this page</h1>
+
+<a class="btn btn-success" asp-action="LogOut">LogOut</a>
+
+<h3>Claims properties</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">type</th>
+            <th scope="col">value</th>
+
+        </tr>
+        </thead>
+        <tbody>
+       
+        @foreach (var item in User.Claims)
+        {
+            <tr>
+                <td>@item.Type</td>
+                <td>@item.Value</td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+
+<h3>Authentication properties </h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">type</th>
+        <th scope="col">value</th>
+
+    </tr>
+    </thead>
+    <tbody>
+       
+    @foreach (var item in (await Context.AuthenticateAsync()).Properties.Items)
+    {
+        <tr>
+            <td>@item.Key</td>
+            <td>@item.Value</td>
+
+        </tr>
+    }
+    </tbody>
+</table>

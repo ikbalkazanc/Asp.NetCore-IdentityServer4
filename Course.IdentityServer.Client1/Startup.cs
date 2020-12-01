@@ -23,6 +23,25 @@ namespace Course.IdentityServer.Client1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultScheme = "myCookies";
+                opt.DefaultChallengeScheme = "oidc";
+            }).AddCookie("myCookies").AddOpenIdConnect("oidc", opts =>
+            {
+                opts.SignInScheme = "myCookies";
+                opts.Authority = "https://localhost:5001";
+                opts.ClientId = "Client1-Mvc";
+                opts.ClientSecret = "secret";
+                opts.ResponseType = "code id_token";
+                //more claim info
+                opts.GetClaimsFromUserInfoEndpoint = true;
+                //if azuthorization success save token
+                opts.SaveTokens = true;
+                //add scope
+                opts.Scope.Add("api1.read");
+                opts.Scope.Add("offline_access");
+            });
             services.AddControllersWithViews();
         }
 
@@ -43,7 +62,7 @@ namespace Course.IdentityServer.Client1
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
