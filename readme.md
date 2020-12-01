@@ -74,16 +74,66 @@ This time we are checking to token authorize on API as client. of course we're r
 POST https://base-url/connect/introspect
 ```
 #### End Session Endpoint
+
 front channel authorize enpointe yapılan istektir.
 back end channel token endpointe yapılan istektir.
 ## Quickstart UI
 A sample UI is exist in identityServer4 github page. I will by using this UI i contunie this project. For this reason required including in the auth server for those who will read the entire blog. You easily can include with powershell.You can visit the github repository for more details in <a href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">here</a>. 
 
 ## Creating Solution Project
-First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.   I 
+First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.
 ## Client Credentials Grant Application
-
-Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. 
+Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. Hereunder let's create a scenario. We have two client and two API . And we define identity allowance for APIs. such as read or write. as example, client1 can read to API1 and client2 can write to API2. Apart from these, clients cannot access to apıs.
+### Configure Sources
+We will work in memorylable. For this reason we creating a named `Config.cs` in Auth server project. We define clients, resources and scopes in this class. Actually this code part is so understandable. But still let's explain. We are defining for middleware services. And we are create `ApiScope` list. Then we defining resource for APIs. And clients... 
+##### Scopes
+```csharp
+public static IEnumerable<ApiScope> GerApiScopes()
+{
+ return new List<ApiScope>
+ {
+  new ApiScope("api1.read","read permission for API 1"),                
+  new ApiScope("api2.write","write permission for API 2"),              
+ };
+}
+```
+##### API Resources
+```csharp
+ public static IEnumerable<ApiResource> GetApiResource()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("resource_api1"){Scopes = {"api1.read"}},
+                new ApiResource("resource_api2"){Scopes = {"api2.write"}}
+            };
+        }
+```
+##### Clients
+```csharp
+public static IEnumerable<Client> GetClients()
+        {
+            return new List<Client>()
+            {
+                new Client()
+                {
+                    ClientId = "Client1",
+                    ClientName = "Client 1 API app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = {"api1.read"}
+                },
+                new Client()
+                {
+                    ClientId = "Client2",
+                    ClientName = "Client 2 API app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = {"api2.write"}
+                },
+                }
+            };
+        }
+```
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
