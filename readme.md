@@ -134,6 +134,18 @@ public static IEnumerable<Client> GetClients()
             };
         }
 ```
+We defined some resource. On next, there is introducing resources to identity server. We will add service and middleware layer. Also require define grant type for identity server in sevices. 
+```csharp
+services.AddIdentityServer()
+  .AddInMemoryApiResources(Config.GerApiResource())
+  .AddInMemoryApiScopes(Config.GerApiScopes())
+  .AddInMemoryClients(Config.GetClients())
+  .AddDeveloperSigningCredential();
+```
+<strong>Note :</strong>It's must define after from authorization
+```csharp
+app.UseIdentityServer();
+```
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
