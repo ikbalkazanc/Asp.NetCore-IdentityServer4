@@ -84,7 +84,7 @@ A sample UI is exist in identityServer4 github page. I will by using this UI i c
 First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.
 ## Client Credentials Grant Application
 Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. Hereunder let's create a scenario. We have two client and two API . And we define identity allowance for APIs. such as read or write. as example, client1 can read to API1 and client2 can write to API2. Apart from these, clients cannot access to apıs.
-### Configure Sources
+### 1.Configure Sources
 We will work in memorylable. For this reason we creating a named `Config.cs` in Auth server project. We define clients, resources and scopes in this class. Actually this code part is so understandable. But still let's explain. We are defining for middleware services. And we are create `ApiScope` list. Then we defining resource for APIs. And clients... 
 ##### Scopes
 ```csharp
@@ -145,6 +145,50 @@ services.AddIdentityServer()
 <strong>Note :</strong>It's must define after from authorization
 ```csharp
 app.UseIdentityServer();
+```
+### 2.Client Side Processes
+in the next, require to realizationing of client credentials grant algorithm. I tried explain process by process in below. I hope it's apprehensible. 
+```csharp
+public async Task<IActionResult> Index()
+        {
+            //require http client object for requests
+            HttpClient httpClient = new HttpClient();
+            //we're gets information about auth server such as scopes and base url
+            var discovery = await httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+
+            if (discovery.IsError)
+            {
+                //logging
+            }
+
+            ClientCredentialsTokenRequest clientCredentialsTokenRequest = new ClientCredentialsTokenRequest();
+            clientCredentialsTokenRequest.ClientId = _configuration["Client:ClientId"];//değiştirilecek
+            clientCredentialsTokenRequest.ClientSecret = _configuration["Client:ClientSecret"];
+            //We define address (https://base-ulr/connect/token) where we will receive token   
+            clientCredentialsTokenRequest.Address = discovery.TokenEndpoint;
+            //And sending request
+            var token = await httpClient.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest);
+
+            if (token.IsError)
+            {
+                //logging
+            }
+            //at now we have a access token. We can request to api. Also require authorization type in header
+            httpClient.SetBearerToken(token.AccessToken);
+
+            var response = await httpClient.GetAsync("https://localhost:5016/api/product/getproducts");
+            List<Product> products = new List<Product>();
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                products = JsonConvert.DeserializeObject<List<Product>>(content);
+            }
+            else
+            {
+                //logging
+            }
+            return View(products);
+        }
 ```
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
