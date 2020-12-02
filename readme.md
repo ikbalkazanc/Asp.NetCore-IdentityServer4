@@ -150,45 +150,38 @@ app.UseIdentityServer();
 in the next, require to realizationing of client credentials grant algorithm. I tried explain process by process in below. I hope it's apprehensible. 
 ```csharp
 public async Task<IActionResult> Index()
-        {
-            //require http client object for requests
-            HttpClient httpClient = new HttpClient();
-            //we're gets information about auth server such as scopes and base url
-            var discovery = await httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+  {
+  //require http client object for requests
+  HttpClient httpClient = new HttpClient();
+  //we're gets information about auth server such as scopes and base url
+  var discovery = await httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+  
+  if (discovery.IsError){/*Logging*/}
 
-            if (discovery.IsError)
-            {
-                //logging
-            }
+  ClientCredentialsTokenRequest clientCredentialsTokenRequest = new ClientCredentialsTokenRequest();
+  clientCredentialsTokenRequest.ClientId = "Client1";
+  clientCredentialsTokenRequest.ClientSecret = "secret";
+  //We define address (https://base-ulr/connect/token) where we will receive token   
+  clientCredentialsTokenRequest.Address = discovery.TokenEndpoint;
+  //And sending request
+  var token = await httpClient.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest);
 
-            ClientCredentialsTokenRequest clientCredentialsTokenRequest = new ClientCredentialsTokenRequest();
-            clientCredentialsTokenRequest.ClientId = _configuration["Client:ClientId"];//değiştirilecek
-            clientCredentialsTokenRequest.ClientSecret = _configuration["Client:ClientSecret"];
-            //We define address (https://base-ulr/connect/token) where we will receive token   
-            clientCredentialsTokenRequest.Address = discovery.TokenEndpoint;
-            //And sending request
-            var token = await httpClient.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest);
+  if (token.IsError){/*Logging*/}
 
-            if (token.IsError)
-            {
-                //logging
-            }
-            //at now we have a access token. We can request to api. Also require authorization type in header
-            httpClient.SetBearerToken(token.AccessToken);
+  //at now we have a access token. We can request to api. Also require authorization type in header
+  httpClient.SetBearerToken(token.AccessToken);
 
-            var response = await httpClient.GetAsync("https://localhost:5016/api/product/getproducts");
-            List<Product> products = new List<Product>();
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                products = JsonConvert.DeserializeObject<List<Product>>(content);
-            }
-            else
-            {
-                //logging
-            }
-            return View(products);
-        }
+  var response = await httpClient.GetAsync("https://localhost:5016/api/product/getproducts");
+  List<Product> products = new List<Product>();
+  if (response.IsSuccessStatusCode)
+  {
+  var content = await response.Content.ReadAsStringAsync();
+  products = JsonConvert.DeserializeObject<List<Product>>(content);
+  }
+  else{/*Logging*/}
+
+  return View(products);
+}
 ```
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
