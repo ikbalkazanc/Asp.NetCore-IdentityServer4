@@ -183,6 +183,32 @@ public async Task<IActionResult> Index()
   return View(products);
 }
 ```
+### API Side Processes
+Now, We must inform to API project about resources lastly.   
+```csharp
+  public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddAuthentication(/*NormalUser*/JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(/*NormalUser*/JwtBearerDefaults.AuthenticationScheme, opt =>
+                {
+                    opt.Authority = "https://localhost:5001";
+                    opt.Audience = "resource_api1";
+                });
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("ReadProduct", policy =>
+                {
+                    policy.RequireClaim("scope", "api1.read");
+                });
+                opts.AddPolicy("UpdateOrCreate", policy =>
+                {
+                    policy.RequireClaim("scope", new [] {"api1.update","api1.create"});
+                });
+            });
+            services.AddControllers();
+        }
+```
+
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
