@@ -184,7 +184,7 @@ public async Task<IActionResult> Index()
 }
 ```
 ### API Side Processes
-Now, We must inform to API project about resources lastly. But after we must include Jwt Token nutget package.   
+Now, We must inform to API project about resources lastly. But after we must include Jwt Token nutget package. Also it's middleware layer for reason we're adding `app.UseAuthentication()` to configure method.    
 ```csharp
   public void ConfigureServices(IServiceCollection services)
         {
