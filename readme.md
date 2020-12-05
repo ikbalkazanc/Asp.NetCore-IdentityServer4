@@ -224,3 +224,6 @@ We learned many topic about identity server 4. And we solved an example accordin
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
 https://identityserver4.readthedocs.io/en/latest/index.html</br>
+
+## Contact
+Muhammet İkbal KAZANCI - [LinkedIn](https://www.linkedin.com/in/ikbalkazanc/) - mi.kazanci@hotmail.com
