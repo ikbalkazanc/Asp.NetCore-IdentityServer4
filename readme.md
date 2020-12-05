@@ -184,7 +184,7 @@ public async Task<IActionResult> Index()
 }
 ```
 ### API Side Processes
-Now, We must inform to API project about resources lastly.   
+Now, We must inform to API project about resources lastly. But after we must include Jwt Token nutget package.   
 ```csharp
   public void ConfigureServices(IServiceCollection services)
         {
