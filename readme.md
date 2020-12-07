@@ -3,6 +3,8 @@
 </div>
 
 # Identity Server
+## Instruction
+I tried explain identity server. in the enf of article you will have knowledge of many significant topics like grants and endpoint. Also i explained client credentials grant step by step. Could be some grammer and word mistakes because of my english. I hope it's understandable. Good luck 🍀      
 ## What is Identity Server 4 
 Identity server is provide many easiness to us. We can define authorization rules. And we can assing this rules to APIs and Clients. As example, client1 can do just read process in Apı2. It provides many facilities like this. We will talk about in detail later. Indentity Server is use OAuth 2 and OpenId Connect protocols. So we are required to know what they are.
 #### OAuth 2.0 (Authorization)
@@ -60,8 +62,6 @@ Discovery endpoint is a information request about auth server. its response json
 ````
 https://base-url/.well-known/openid-configuration
 ````
-#### Authorize Endpoint
-#### Token Endpoint
 #### User Info Endpoint
 We can get information about user idenity from auth server. We need token for this.Also when we get information, some data will be missing. We can set this up in client services. 
 ```
@@ -73,10 +73,6 @@ This time we are checking to token authorize on API as client. of course we're r
 ```
 POST https://base-url/connect/introspect
 ```
-#### End Session Endpoint
-
-front channel authorize enpointe yapılan istektir.
-back end channel token endpointe yapılan istektir.
 ## Quickstart UI
 A sample UI is exist in identityServer4 github page. I will by using this UI i contunie this project. For this reason required including in the auth server for those who will read the entire blog. You easily can include with powershell.You can visit the github repository for more details in <a href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">here</a>. 
 
