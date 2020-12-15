@@ -3,6 +3,8 @@
 </div>
 
 # Identity Server
+## Instruction
+I tried explain identity server. in the enf of article you will have knowledge of many significant topics like grants and endpoint. Also i explained client credentials grant step by step. Could be some grammer and word mistakes because of my english. I hope it's understandable. Good luck 🍀      
 ## What is Identity Server 4 
 Identity server is provide many easiness to us. We can define authorization rules. And we can assing this rules to APIs and Clients. As example, client1 can do just read process in Apı2. It provides many facilities like this. We will talk about in detail later. Indentity Server is use OAuth 2 and OpenId Connect protocols. So we are required to know what they are.
 #### OAuth 2.0 (Authorization)
@@ -60,8 +62,6 @@ Discovery endpoint is a information request about auth server. its response json
 ````
 https://base-url/.well-known/openid-configuration
 ````
-#### Authorize Endpoint
-#### Token Endpoint
 #### User Info Endpoint
 We can get information about user idenity from auth server. We need token for this.Also when we get information, some data will be missing. We can set this up in client services. 
 ```
@@ -73,18 +73,153 @@ This time we are checking to token authorize on API as client. of course we're r
 ```
 POST https://base-url/connect/introspect
 ```
-#### End Session Endpoint
-front channel authorize enpointe yapılan istektir.
-back end channel token endpointe yapılan istektir.
 ## Quickstart UI
 A sample UI is exist in identityServer4 github page. I will by using this UI i contunie this project. For this reason required including in the auth server for those who will read the entire blog. You easily can include with powershell.You can visit the github repository for more details in <a href="https://github.com/IdentityServer/IdentityServer4.Quickstart.UI">here</a>. 
 
 ## Creating Solution Project
-First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.   I 
+First of all we are need a project template. I will use 2 API, 2 Client and a AuthServer as web application project in my solution. I will tell the whole scenario through these projects. You can examine structure in the repository.
 ## Client Credentials Grant Application
+Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. Hereunder let's create a scenario. We have two client and two API . And we define identity allowance for APIs. such as read or write. as example, client1 can read to API1 and client2 can write to API2. Apart from these, clients cannot access to apıs.
+### 1. Configure Sources
+We will work in memorylable. For this reason we creating a named `Config.cs` in Auth server project. We define clients, resources and scopes in this class. Actually this code part is so understandable. But still let's explain. We are defining for middleware services. And we are create `ApiScope` list. Then we defining resource for APIs. And clients... 
+##### Scopes
+```csharp
+public static IEnumerable<ApiScope> GerApiScopes()
+{
+ return new List<ApiScope>
+ {
+  new ApiScope("api1.read","read permission for API 1"),                
+  new ApiScope("api2.write","write permission for API 2"),              
+ };
+}
+```
+##### API Resources
+```csharp
+ public static IEnumerable<ApiResource> GetApiResource()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("resource_api1"){Scopes = {"api1.read"}},
+                new ApiResource("resource_api2"){Scopes = {"api2.write"}}
+            };
+        }
+```
+##### Clients
+```csharp
+public static IEnumerable<Client> GetClients()
+        {
+            return new List<Client>()
+            {
+                new Client()
+                {
+                    ClientId = "Client1",
+                    ClientName = "Client 1 API app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = {"api1.read"}
+                },
+                new Client()
+                {
+                    ClientId = "Client2",
+                    ClientName = "Client 2 API app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = {"api2.write"}
+                },
+                }
+            };
+        }
+```
+We defined some resource. On next, there is introducing resources to identity server. We will add service and middleware layer. Also require define grant type for identity server in sevices. 
+```csharp
+services.AddIdentityServer()
+  .AddInMemoryApiResources(Config.GerApiResource())
+  .AddInMemoryApiScopes(Config.GerApiScopes())
+  .AddInMemoryClients(Config.GetClients())
+  .AddDeveloperSigningCredential();
+```
+<strong>Note :</strong>It's must define after from authorization
+```csharp
+app.UseIdentityServer();
+```
+### 2. Client Side Processes
+in the next, require to realizationing of client credentials grant algorithm. I tried explain process by process in below. I hope it's apprehensible. 
+```csharp
+public async Task<IActionResult> Index()
+  {
+  //require http client object for requests
+  HttpClient httpClient = new HttpClient();
+  //we're gets information about auth server such as scopes and base url
+  var discovery = await httpClient.GetDiscoveryDocumentAsync("https://localhost:5001");
+  
+  if (discovery.IsError){/*Logging*/}
 
-Let's remember again. What is Client Credentials Grant? We were doing client authentication request to auth server. Then it sending back with Access Token. 
+  ClientCredentialsTokenRequest clientCredentialsTokenRequest = new ClientCredentialsTokenRequest();
+  clientCredentialsTokenRequest.ClientId = "Client1";
+  clientCredentialsTokenRequest.ClientSecret = "secret";
+  //We define address (https://base-ulr/connect/token) where we will receive token   
+  clientCredentialsTokenRequest.Address = discovery.TokenEndpoint;
+  //And sending request
+  var token = await httpClient.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest);
+
+  if (token.IsError){/*Logging*/}
+
+  //at now we have a access token. We can request to api. Also require authorization type in header
+  httpClient.SetBearerToken(token.AccessToken);
+
+  var response = await httpClient.GetAsync("https://localhost:5016/api/product/getproducts");
+  List<Product> products = new List<Product>();
+  if (response.IsSuccessStatusCode)
+  {
+  var content = await response.Content.ReadAsStringAsync();
+  products = JsonConvert.DeserializeObject<List<Product>>(content);
+  }
+  else{/*Logging*/}
+
+  return View(products);
+}
+```
+### 3. API Side Processes
+Now, We must inform to API project about resources lastly. But after we must include Jwt Token nutget package. Also since it's the middleware level we are adding `app.UseAuthentication()` to configure method. Footnote, authentitcation must be after authorize.    
+```csharp
+  public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddAuthentication(/*NormalUser*/JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(/*NormalUser*/JwtBearerDefaults.AuthenticationScheme, opt =>
+                {
+                    opt.Authority = "https://localhost:5001";
+                    opt.Audience = "resource_api1";
+                });
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("ReadProduct", policy =>
+                {
+                    policy.RequireClaim("scope", "api1.read");
+                });
+                opts.AddPolicy("UpdateOrCreate", policy =>
+                {
+                    policy.RequireClaim("scope", new [] {"api1.update","api1.create"});
+                });
+            });
+            services.AddControllers();
+        }
+```
+in contorller, we can use authorize attribute for action. Or can be direct controller level. if request is not authorized, identity server will return unauthorized status. 
+```csharp
+[Authorize(Policy = "ReadProduct")]
+public IActionResult GetProducts()
+{
+  return Ok(new List<Product>());
+}
+```
+## Result
+We learned many topic about identity server 4. And we solved an example according to the scenario. Now we can code system using client credentials flow with identity server. I didnt mention so about another flows. But you can find many article about its in internet.Thank you for reading. Good luck with coding.  
+
+
 ## Source
 https://www.gencayyildiz.com/blog/identityserver4-yazi-serisi-8-authorization-code-grantflow/</br>
 https://tools.ietf.org/html/rfc6749</br>
 https://identityserver4.readthedocs.io/en/latest/index.html</br>
+
+## Contact
+Muhammet İkbal KAZANCI - [LinkedIn](https://www.linkedin.com/in/ikbalkazanc/) - mi.kazanci@hotmail.com
