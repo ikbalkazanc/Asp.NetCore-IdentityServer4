@@ -28,6 +28,12 @@ namespace Course.IdentityServer.Client1.Controllers
             return View();
         }
 
+        public IActionResult AccessDenied(string returnUrl="/")
+        {
+            ViewBag.url = returnUrl;
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

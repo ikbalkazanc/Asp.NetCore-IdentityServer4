@@ -41,7 +41,16 @@ namespace Course.IdentityServer.AuthServer
             {
                 //25.7.22
                 new IdentityResources.OpenId(), //sub Id
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource()
+                {
+                    Name = "CountryAndCity",DisplayName ="Country And City" ,Description = " city and country information of user",
+                    UserClaims = new []{"country","city"}
+                },
+                new IdentityResource()
+                {
+                    Name = "Roles",DisplayName = "Roles",Description = "user roles",UserClaims = new []{"role"}
+                }
             };
         }
 
@@ -52,12 +61,18 @@ namespace Course.IdentityServer.AuthServer
                 new TestUser{SubjectId = "1",Username = "mikbal",Password = "1234",Claims = new List<Claim>()
                 {
                     new Claim("given_name","ikbal"),
-                    new Claim("family_name","kazanci")
+                    new Claim("family_name","kazanci"),
+                    new Claim("country","türkey"),
+                    new Claim("city","istanbul"),
+                    new Claim("role","admin")
                 }},
                 new TestUser{SubjectId = "2",Username = "pelin",Password = "1234",Claims = new List<Claim>()
                 {
                     new Claim("given_name","pelin"),
-                    new Claim("family_name","su")
+                    new Claim("family_name","su"),
+                    new Claim("country","Turkey"),
+                    new Claim("city","Anakara"),
+                    new Claim("role","customer")
                 }}
             };
         }
@@ -99,7 +114,9 @@ namespace Course.IdentityServer.AuthServer
                         "api1.read",
                         "api2.write",
                         "api1.update",
-                        IdentityServerConstants.StandardScopes.OfflineAccess
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "CountryAndCity",
+                        "Roles"
                     },
                     //default 1 hour
                     AccessTokenLifetime = 2*3600,
@@ -108,8 +125,42 @@ namespace Course.IdentityServer.AuthServer
                     //use more than one
                     RefreshTokenUsage = TokenUsage.ReUse,
                     //
-                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
+                    //
+                    RequireConsent = true
+                },
+                new Client()
+                {
+                    ClientId = "Client2-Mvc",
+                    //auth pkce
+                    RequirePkce = false,
+                    ClientName = "Client2-Mvc mvc app",
+                    ClientSecrets = new[] {new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    //front channel
+                    RedirectUris = new List<string>{ "https://localhost:5026/signin-oidc" },
+                    PostLogoutRedirectUris = new List<string>{"https://localhost:5026/signout-callback-oidc"},
+                    AllowedScopes = {IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1.read",
+                        "api2.write",
+                        "api1.update",
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "CountryAndCity",
+                        "Roles"
+                    },
+                    //default 1 hour
+                    AccessTokenLifetime = 2*3600,
+                    //allow reflesh token
+                    AllowOfflineAccess = true,
+                    //use more than one
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    //
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
+                    //
+                    RequireConsent = true
                 }
+
             };
         }
     }

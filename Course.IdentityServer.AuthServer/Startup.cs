@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Course.IdentityServer.AuthServer.Model;
+using Course.IdentityServer.AuthServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +27,13 @@ namespace Course.IdentityServer.AuthServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<CustomDbContext>(opt =>
+            {
+                opt.UseSqlServer(Configuration["ConnectionStrings:SqlConStr"]);
+            });
+
+            services.AddScoped<ICustomUserRepository, CustomUserRepository>();
+
             //define config sources. And remark secret key type
             //we using two type key
             //private key => only in indentityServer
@@ -33,7 +43,7 @@ namespace Course.IdentityServer.AuthServer
                 .AddInMemoryApiScopes(Config.GerApiScopes())
                 .AddInMemoryClients(Config.GetClients())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddTestUsers(Config.GetUsers().ToList())
+                //.AddTestUsers(Config.GetUsers().ToList())
                 .AddDeveloperSigningCredential();
         }
 

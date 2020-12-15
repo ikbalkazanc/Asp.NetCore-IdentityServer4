@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Course.IdentityServer.Client1.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Course.IdentityServer.Client1
 {
@@ -23,11 +26,16 @@ namespace Course.IdentityServer.Client1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<IApiResourceHttpClient, ApiResourceHttpClient>();
             services.AddAuthentication(opt =>
             {
                 opt.DefaultScheme = "myCookies";
                 opt.DefaultChallengeScheme = "oidc";
-            }).AddCookie("myCookies").AddOpenIdConnect("oidc", opts =>
+            }).AddCookie("myCookies", opts =>
+            {
+                opts.AccessDeniedPath = "/Home/AccessDenied";
+            }).AddOpenIdConnect("oidc", opts =>
             {
                 opts.SignInScheme = "myCookies";
                 opts.Authority = "https://localhost:5001";
@@ -41,6 +49,15 @@ namespace Course.IdentityServer.Client1
                 //add scope
                 opts.Scope.Add("api1.read");
                 opts.Scope.Add("offline_access");
+                opts.Scope.Add("CountryAndCity");
+                opts.Scope.Add("Roles");
+                opts.ClaimActions.MapUniqueJsonKey("country","country");
+                opts.ClaimActions.MapUniqueJsonKey("city", "city");
+                opts.ClaimActions.MapUniqueJsonKey("role", "role");
+                opts.TokenValidationParameters=new TokenValidationParameters
+                {
+                    RoleClaimType = "role"
+                };
             });
             services.AddControllersWithViews();
         }
